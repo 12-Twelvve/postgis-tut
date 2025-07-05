@@ -1,0 +1,34 @@
+-- shp2pgsql -I -s 4326 nyc_census_blocks.shp public.nyc_census_blocks | psql -U legion -d nepalgeo
+-- shp2pgsql -I -s 4326 ny_neighborhoods.shp public.ny_neighborhoods | psql -U legion -d nepalgeo   
+
+select postgis_full_version() as version;
+
+select * from ny_neighborhoods where false;
+select gid, boroname, name from ny_neighborhoods limit 10;
+
+select  count( DISTINCT name) from ny_neighborhoods;
+
+select name from ny_neighborhoods where boroname = 'Brooklyn';
+
+
+select name, char_length(name) from  ny_neighborhoods WHERE boroname = 'Brooklyn';
+
+select avg(char_length(name)), stddev(char_length(name)) from ny_neighborhoods WHERE boroname = 'Brooklyn';
+
+select boroname, avg(char_length(name)) as avg_length, stddev(char_length(name)) as stddev_length from ny_neighborhoods group by boroname order by avg_length;
+
+
+-- nyc census blocks
+
+select * from nyc_census_blocks where false;
+
+select sum(popn_total) from nyc_census_blocks;
+
+select sum(popn_total) from nyc_census_blocks where boroname ='The Bronx';
+
+select boroname, sum(popn_total) as total_population from nyc_census_blocks group by boroname order by total_population desc;
+
+select boroname, sum(popn_white) as total_white, sum(popn_black) as total_black from nyc_census_blocks group by boroname order by total_white desc;
+
+select boroname, sum(popn_white)/sum(popn_total) as pct_white from nyc_census_blocks group by boroname;
+
