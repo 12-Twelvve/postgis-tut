@@ -38,3 +38,22 @@ select name, st_astext(geom) from nyc_subway_stations limit 10;
 select st_astext(geom) from geometries;
 
 select st_length(geom) as length from geometries where name = 'Linestring';
+
+-- st_startpoint and st_endpoint
+-- st_npoints
+select st_npoints(geom) as npoints from geometries where name = 'Linestring';
+
+-- polygons
+
+select st_astext(geom) from geometries where name = 'Polygon';
+
+select st_astext(geom) from geometries where name like 'Polygon%';
+
+select name, st_area(geom) from geometries where name like 'Polygon%';
+
+
+-- collections types:
+-- > multipoint, multilinestring, multipolygon, geometrycollection
+select name, st_astext(geom) from geometries where name = 'Collection';
+
+
