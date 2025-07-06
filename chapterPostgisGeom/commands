@@ -1,0 +1,40 @@
+-- postgis geom 
+
+select * from ny_neighborhoods where False;
+
+-- creating geometry
+
+create table geometries( name VARCHAR , geom GEOMETRY);
+
+insert into geometries (name, geom) VALUES
+('Point', 'Point(0 0)'),
+('Linestring', 'LINESTRING(0 0, 1 1, 2 2)'),
+('Polygon', 'POLYGON((0 0, 0 1, 1 1, 1 0, 0 0))'),
+('Polygonwithholes', 'POLYGON((0 0, 0 1, 1 1, 1 0, 0 0), (0.2 0.2, 0.2 0.8, 0.8 0.8, 0.8 0.2, 0.2 0.2))'),
+('Collection', 'GEOMETRYCOLLECTION(POINT(0 0), LINESTRING(1 1, 2 2), POLYGON((3 3, 3 4, 4 4, 4 3, 3 3)))');
+
+SELECT name, ST_AsText(geom) AS geom_text FROM geometries;
+
+-- metadata tables
+select * from spatial_ref_sys limit 10;
+
+
+select * from geometry_columns limit 10;
+
+select name, st_geometrytype(geom), st_ndims(geom), st_srid(geom) from geometries;
+
+-- insert into geometries (name, geom) VALUES
+-- ('Point', 'Point(0 0 0)'),
+-- ('Linestring', 'LINESTRING(0 0 0, 1 1 1, 2 2 2)'),
+
+
+select st_astext(geom) from geometries where name = 'Point';
+
+select st_x(geom) as x, st_y(geom) as y from geometries where name = 'Point';
+
+select name, st_astext(geom) from nyc_subway_stations limit 10;
+
+-- linestrings
+select st_astext(geom) from geometries;
+
+select st_length(geom) as length from geometries where name = 'Linestring';
