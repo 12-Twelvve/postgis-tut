@@ -56,4 +56,14 @@ select name, st_area(geom) from geometries where name like 'Polygon%';
 -- > multipoint, multilinestring, multipolygon, geometrycollection
 select name, st_astext(geom) from geometries where name = 'Collection';
 
+-- geometry input outputs
+
+-- wkt, wkb, gml,, kml, geojson, 
+
+-- casting from text
+select 0.9::text;
+
+select 'POINT(0 0)'::geometry;
+
+SELECT 'srid=4326;POINT(0 0)'::geometry;
 
